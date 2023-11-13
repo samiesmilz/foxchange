@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static', filename='styles.css')}}"
+    />
+
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/"><h1 id="logo">{% block logo %}{% endblock %}</h1></a>
+        <ul>
+          <li>
+            <a href="/" id="slogan"
+              ><span>Global currency, local simplicity.</span></a
+            >
+          </li>
+        </ul>
+        <a href="#"><button id="contact-us-btn">Lets talk</button></a>
+      </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <section class="flash">
+      {% for category, msg in messages %}
+      <p id="flash-msg" class="{{category}}">{{msg}}</p>
+      {% endfor %}
+    </section>
+    {% endif %} {% endwith %}
+
+    <div class="container">{% block content %} {% endblock %}</div>
+
+    <footer>
+      <!-- <span>A <i>samie smilz production.</i></span> -->
+    </footer>
+  </body>
+</html>

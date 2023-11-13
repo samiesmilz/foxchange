@@ -1,0 +1,91 @@
+{% extends 'baselet.html' %} {% block title %} FoXchange | Money matters {%
+endblock %} {% block logo %} [ FOXCHANGE ] {% endblock %} {% block content %}
+
+<div id="container">
+  <p class="subtitle">Let's talk money.</p>
+
+  <fieldset id="fieldset">
+    <legend id="legend">Smart converter</legend>
+    <form action="/convert" id="convert-form" method="post">
+      <div id="input-fields-div">
+        <div id="amount-div">
+          <label for="amount">Amount</label>
+          <input
+            type="text"
+            name="amount"
+            id="amount"
+            placeholder="$1"
+            class="currency"
+          />
+        </div>
+        <div id="currency-from-div">
+          <label for="currency-from">From</label>
+          <select name="currency-from" id="currency-from" class="currency">
+            {% for key, val in currencies.items() %}
+            <option value="{{key}}">{{key}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div id="currency-to-div">
+          <label for="currency-to">To</label>
+          <select name="currency-to" id="currency-to" class="currency">
+            {% for key, val in currencies.items() %}
+            <option class="currency-unit" value="{{key}}">{{key}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div id="show-rates-div">
+        {% if query %}
+        <div id="result-div">
+          <span id="converted-from">
+            {{ query.amount }} {{ query.from }} = {{ response["result"] }} {{
+            query.to }}
+          </span>
+        </div>
+        <span id="result">{{ query.result }}</span>
+        <span id="from-unit"></span>
+        <span id="to-unit"></span>
+        {% endif %}
+      </div>
+      <div id="info-btn-div">
+        <p id="info-note">
+          We reference the mid-market rate in our Converter for informational
+          purposes.
+        </p>
+        <button id="convert-btn">Convert</button>
+      </div>
+    </form>
+  </fieldset>
+  <div id="exchange-rates-div">
+    <h2 id="exchange-rates-title">Live Exchange Rates</h2>
+    <div>
+      <form action="">
+        <div>
+          <label for="base-currency"
+            >Base currency :
+            <span id="base-currency-code">
+              {% if query %} 1 {{query.from}} - {{currencies.get(query.from)}}
+              {% else %} 1 USD - US Dollar. {% endif %}
+            </span></label
+          >
+        </div>
+      </form>
+    </div>
+    {% if quotes %}
+    <div id="all-quotes">
+      {% for key, val in quotes.items() %}
+      <div class="quote-item">
+        <div class="currency-code">
+          <span>{{key}} </span>
+        </div>
+        <div id="currency-name">- {{currencies.get(key[3:])}}</div>
+        <div><span class="quote-val">{{val}}</span></div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
