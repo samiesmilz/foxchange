@@ -27,7 +27,7 @@ def post_data():
     currencies = session.get("currencies", get_currency_list())
 
     try:
-        amount = int(amount_str)
+        amount = float(amount_str)
     except ValueError as e:
         flash("Please enter a valid amount!")
         return render_template("index.html", currencies=currencies, quotes=session.get("quotes", get_live_rates()))
