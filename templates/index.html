@@ -39,8 +39,8 @@ endblock %} {% block logo %} [ FOXCHANGE ] {% endblock %} {% block content %}
         {% if query %}
         <div id="result-div">
           <span id="converted-from">
-            {{ query.amount }} {{ query.from }} = {{ response["result"] }} {{
-            query.to }}
+            {{ "{:,.2f}".format(query.amount) }} {{ query.from }} = {{
+            "{:,.2f}".format(response["result"]) }} {{ query.to }}
           </span>
         </div>
         <span id="result">{{ query.result }}</span>
